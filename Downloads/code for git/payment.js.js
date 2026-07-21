@@ -1,30 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+require("dotenv").config();
+const express = require("express");
+const Stripe = require("stripe");
+const cors = require("cors");
 
-<body>
+const app = express();
 
-<div class="login-box">
+app.use(cors());
+app.use(express.json());
 
-<h2>Login</h2>
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-<input type="email" id="email" placeholder="Enter Email">
+// Create Payment Intent
+app.post("/create-payment-intent", async (req, res) => {
+  try {
+    const { amount, currency } = req.body;
 
-<input type="password" id="password" placeholder="Enter Password">
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount, // e.g. 5000 = $50.00
+      currency: currency || "usd",
+      payment_method_types: ["card"],
+    });
 
-<button onclick="login()">Login</button>
-<button onclick="login()">Login</button>
-<button onclick="login()">Login</button>
-<button onclick="login()">Login</button>
+    res.status(200).json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+console.log("hwlooooooooooo woeld")
 
-<p id="message"></p>
 
-</div>
 
-<script src="script.js"></script>
-
-</body>
-</html>
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
+});
