@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Login</title>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h2>Login Form</h2>
+<div class="login-box">
 
-    <form>
-        <label>Email:</label><br>
-        <input type="email" placeholder="Enter Email"><br><br>
+<h2>Login</h2>
 
-        <label>Password:</label><br>
-        <input type="password" placeholder="Enter Password"><br><br>
+<input type="email" id="email" placeholder="Enter Email">
 
-        <button type="submit">Login</button>
-    </form>
+<input type="password" id="password" placeholder="Enter Password">
+
+<button onclick="login()">Login</button>
+<button onclick="login()">Login</button>
+<button onclick="login()">Login</button>
+<button onclick="login()">Login</button>
+
+<p id="message"></p>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
