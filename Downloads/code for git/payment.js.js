@@ -1,40 +1,21 @@
-require("dotenv").config();
-const express = require("express");
-const Stripe = require("stripe");
-const cors = require("cors");
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Login</title>
+</head>
+<body>
 
-const app = express();
+    <h2>Login Form</h2>
 
-app.use(cors());
-app.use(express.json());
+    <form>
+        <label>Email:</label><br>
+        <input type="email" placeholder="Enter Email"><br><br>
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+        <label>Password:</label><br>
+        <input type="password" placeholder="Enter Password"><br><br>
 
-// Create Payment Intent
-app.post("/create-payment-intent", async (req, res) => {
-  try {
-    const { amount, currency } = req.body;
+        <button type="submit">Login</button>
+    </form>
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount, // e.g. 5000 = $50.00
-      currency: currency || "usd",
-      payment_method_types: ["card"],
-    });
-
-    res.status(200).json({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
-
-// Variable banaya jo .env port na milne par 5000 use karega
-const PORT = process.env.PORT || 5000; 
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+</body>
+</html>
