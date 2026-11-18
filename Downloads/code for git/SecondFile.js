@@ -51,7 +51,7 @@ router.post("/create-payment-intent", async (req, res) => {
             success: false,
             message: error.message
         });
-
+        console.log("Change in SecondFile");
     }
 
 });
